@@ -3,21 +3,22 @@
 
 Fraction::Fraction(const int _numerator, const int _denominator) : numerator{ _numerator }, denominator{ _denominator } {}
 
-bool Fraction::operator<(const Fraction& other) {
+bool Fraction::operator<(const Fraction& other) const {
     int commonDenominator = findCommonDenominator(denominator, other.denominator);
     return (numerator * commonDenominator / denominator) < (other.numerator * commonDenominator / other.denominator);
 }
 
 bool Fraction::operator>(const Fraction& other) {
-    return !(*this < other);
+    return other < *this;
 }
 
-bool Fraction::operator<=(const Fraction& other) {
-    return *this < other;
+bool Fraction::operator<=(const Fraction& other) const {
+    int commonDenominator = findCommonDenominator(denominator, other.denominator);
+    return (numerator * commonDenominator / denominator) <= (other.numerator * commonDenominator / other.denominator);
 }
 
 bool Fraction::operator>=(const Fraction& other) {
-    return !(*this < other);
+    return other <= *this;
 }
 
 bool Fraction::operator==(const Fraction& other) {
@@ -29,7 +30,7 @@ bool Fraction::operator!=(const Fraction& other) {
     return !(*this == other);
 }
 
-int Fraction::findCommonDenominator(const int a, const int b) {
+int Fraction::findCommonDenominator(const int a, const int b) const {
     int x = a;
     int y = b;
     if (!(a % b)) {
